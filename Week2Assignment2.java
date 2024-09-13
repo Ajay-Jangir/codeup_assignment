@@ -1,10 +1,10 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Week2Assignment2 {
     static Constant constant = new Constant();
 
 //  function 1 CountPalindromes
+//    take the input from user and convert to snakeCase (if not in ) and then to the camelCase
     private static String[] substrings;
     private static int index = 0;
     static int countPalindrome = 0;
@@ -108,11 +108,16 @@ public class Week2Assignment2 {
             return "";
         }
         char ch = str.charAt(index);
+        if(index == 0 && !Character.isAlphabetic(ch))
+        {
+            str.toCharArray()[index] = ' ';
+            return toSnakeCase(str, index + 1);
+        }
         if (ch >= 'A' && ch <= 'Z') {
             // Convert uppercase to lowercase and add '_' if not the first character
             return (index == 0 ? "" : "_") + (char) (ch + 32) + toSnakeCase(str, index + 1);
         } else if (ch == '-' || ch == ' ' || !((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9'))) {
-            return toSnakeCase(str, index + 1); // Skip invalid characters
+            return toSnakeCase(str, index + 1);
         }
         return ch + toSnakeCase(str, index + 1);
     }
@@ -165,7 +170,7 @@ public class Week2Assignment2 {
         }
         return true;
     }
-    
+
     static long power = 1;
     static long remainder = 0;
     static long decimalOutput = 0;
@@ -313,7 +318,7 @@ public class Week2Assignment2 {
                     default:
                         System.out.println(constant.invalidChoice);
                 }
-            } catch (InputMismatchException e) {
+            } catch (Exception e) {
                 System.out.println(constant.invalidInput);
                 scanner.nextLine();
             }
