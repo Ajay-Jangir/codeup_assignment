@@ -277,7 +277,7 @@ public class Week2Assignment2 {
                             try {
                                 System.out.print(constant.countConstant);
                                 String inputString = scanner.nextLine();
-                                countConsonants(inputString, 0);
+                                countConsonants(inputString);
                                 System.out.print(constant.exitCode);
                             } catch (Exception e) {
                                 System.out.println(constant.invalidInput);
