@@ -1,10 +1,24 @@
-import java.util.Scanner;
+/***
+ * Below program performs the following functions:
+ * 1. Counts unique substring palindromes in a string.
+ * 2. print Nth fibonacci number.
+ * 3. To convert snake case to camel case.
+ * 4. Count consonant in a string.
+ * 5. Convert Binary number to Decimal number.
+ *
+ * This Program is implemented using recursion only. No inbuild fuction or loop is used in implementation of logic.
+ *
+ * Owner: Ajay-Jangir
+ *
+ * Date of creation: 13/09/2024
+ */
 
+import java.util.Scanner;
+import java.math.BigInteger;
 public class Week2Assignment2 {
     static Constant constant = new Constant();
 
 //  function 1 CountPalindromes
-//    take the input from user and convert to snakeCase (if not in ) and then to the camelCase
     private static String[] substrings;
     private static int index = 0;
     static int countPalindrome = 0;
@@ -25,16 +39,13 @@ public class Week2Assignment2 {
         }
         storeUniqueSubstrings(str, start, end + 1);
     }
-
-    // Recursive method to generate a substring
     private static String substring(String str, int start, int end) {
         if (start >= end) {
             return "";
         }
         return str.charAt(start) + substring(str, start + 1, end);
     }
-
-    // Recursive method to check if a substring is repeated within the given range
+    
     private static boolean isSubstringRepeated(String sub, int start, int end) {
         if (start >= end) {
             return false;
@@ -55,7 +66,7 @@ public class Week2Assignment2 {
         }
 
         if (str.charAt(start) != str.charAt(end)) {
-            return false;  // If characters don't match, it's not a palindrome
+            return false;
         }
 
         return isPalindrome(str, start + 1, end - 1);
@@ -74,24 +85,31 @@ public class Week2Assignment2 {
     }
 
     // function 2  nth NthFibonacci
-    private static long[] memory;
+    private static BigInteger[] memory;
 
-    public static long NthFibonacci(int input) {
+    public static BigInteger NthFibonacci(int input) {
         if (input == 0) {
-            return 0;
+            return BigInteger.ZERO;
         } else if (input == 1) {
-            return 1;
+            return BigInteger.ONE;
         }
 
-        if (memory[input] != 0) {
+        if (!memory[input].equals(BigInteger.ZERO)) {
             return memory[input];
         }
-        memory[input] = NthFibonacci(input - 1) + NthFibonacci(input - 2);
+        memory[input] = NthFibonacci(input - 1).add(NthFibonacci(input - 2));
         return memory[input];
+
+    }
+
+    private static void initializeMemory(int index) {
+        if (index >= 0) {
+            memory[index] = BigInteger.ZERO;
+            initializeMemory(index - 1);
+        }
     }
 
 //    function 4 SnakeToCamel
-
     private static boolean isSnakeCase(String str, int index) {
         if (index >= str.length()) {
             return true;
@@ -107,21 +125,25 @@ public class Week2Assignment2 {
         if (index >= str.length()) {
             return "";
         }
+
         char ch = str.charAt(index);
-        if(index == 0 && !Character.isAlphabetic(ch))
-        {
-            str.toCharArray()[index] = ' ';
+        
+        if (index == 0 && !Character.isAlphabetic(ch) && ch != '_') {
             return toSnakeCase(str, index + 1);
         }
+
         if (ch >= 'A' && ch <= 'Z') {
-            // Convert uppercase to lowercase and add '_' if not the first character
-            return (index == 0 ? "" : "_") + (char) (ch + 32) + toSnakeCase(str, index + 1);
-        } else if (ch == '-' || ch == ' ' || !((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9'))) {
+            return (index == 0 ? "" : "_") + Character.toLowerCase(ch) + toSnakeCase(str, index + 1);
+        } else if (ch == '-' || ch == ' ') {
+            return "_" + toSnakeCase(str, index + 1);
+        } else if (ch == '_') {
+            return "_" + toSnakeCase(str, index + 1);
+        } else if (!((ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9'))) {
             return toSnakeCase(str, index + 1);
         }
         return ch + toSnakeCase(str, index + 1);
     }
-
+    
     private static String toCamelCase(String str, int index, boolean capitalizeNext) {
         if (index >= str.length()) {
             return "";
@@ -131,13 +153,11 @@ public class Week2Assignment2 {
             return toCamelCase(str, index + 1, true);
         }
         if (capitalizeNext) {
-            return (char) (ch - 32) + toCamelCase(str, index + 1, false); // Capitalize current character
+            return Character.toUpperCase(ch) + toCamelCase(str, index + 1, false);
         }
         return ch + toCamelCase(str, index + 1, false);
     }
-
-
-    //    function 4 count consonants
+    
     static int consonantCounter = 0;
 
     public static void countConsonants(String input) {
@@ -155,10 +175,8 @@ public class Week2Assignment2 {
         }
         countConsonant(input, index + 1);
     }
-
-
+    
 //    function 5 binary to decimal
-
     public static boolean isBinaryLong(String input) {
         long newLong = Long.parseLong(input);
         while (newLong > 0) {
@@ -191,8 +209,7 @@ public class Week2Assignment2 {
         power *= 2;
         binaryToDecimalHelper(newBinaryInput);
     }
-
-
+    
     //main function
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -224,14 +241,17 @@ public class Week2Assignment2 {
                                     storeUniqueSubstrings(inputString, 0, 1);
                                     countPalindrome = 0;
                                     checkPalindrome(substrings, 0);
-                                    System.out.println(constant.totalPalindrome  + inputString + " is: " + countPalindrome);
+                                    System.out.println(constant.totalPalindrome + inputString + " is: " + countPalindrome);
                                 }
                                 System.out.print(constant.exitCode);
                                 String exitChoice = scanner.nextLine().trim();
                                 if (exitChoice.equalsIgnoreCase("quit")) {
                                     break;
                                 }
-                            } catch (Exception e) {
+                            }
+                            catch (Exception e) {
+                                System.out.println(constant.invalidInput);
+                            } catch (StackOverflowError e){
                                 System.out.println(constant.invalidInput);
                             }
                         }
@@ -243,12 +263,21 @@ public class Week2Assignment2 {
                                 System.out.print(constant.enterFibonacci);
                                 int fibonacciInteger = scanner.nextInt();
                                 scanner.nextLine();
-                                memory = new long[fibonacciInteger + 1];
-                                System.out.println(constant.indexFibonacci + fibonacciInteger + " is: " + NthFibonacci(fibonacciInteger));
+                                memory = new BigInteger[fibonacciInteger + 1];
+                                initializeMemory(fibonacciInteger);
+                                BigInteger result =  NthFibonacci(fibonacciInteger);
+                                String resultString = result.toString();
+                                if (resultString.length() > 1000) {
+                                    resultString = resultString.substring(0, 1000);
+                                    System.out.println("Fibonacci value at index " + fibonacciInteger + " (truncated to 12 digits): " + resultString);
+                                } else {
+                                    System.out.println("Fibonacci value at index " + fibonacciInteger + ": " + resultString);
+                                }
                                 System.out.print(constant.exitCode);
                             } catch (Exception e) {
                                 System.out.println(constant.invalidInput);
-                                scanner.nextLine();
+                            } catch (StackOverflowError e){
+                                System.out.println(constant.invalidInput);
                             }
                         } while (!(scanner.nextLine().trim()).equalsIgnoreCase("quit"));
                         break;
@@ -283,6 +312,7 @@ public class Week2Assignment2 {
                                 System.out.print(constant.countConstant);
                                 String inputString = scanner.nextLine();
                                 countConsonants(inputString);
+                                consonantCounter = 0;
                                 System.out.print(constant.exitCode);
                             } catch (Exception e) {
                                 System.out.println(constant.invalidInput);
