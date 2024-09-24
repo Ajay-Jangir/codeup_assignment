@@ -1,32 +1,96 @@
 public class Constant {
-    public String totalConstant = "Total number of consonants: ";
-    public String binaryDecimal = "Binary to Decimal is: ";
-    public String EXIT = "Exiting...";
-    public String enterString = "Enter the String to check number of palindrome: ";
-    public String totalPalindrome = "Number of palindromes in ";
-    public String exitCode = "To 'Exit' enter 'quit' else press any key to continue: ";
-    public String invalidInput = "Invalid Input! Please enter a valid string.";
-    public String enterFibonacci = "Enter the Fibonacci Integer value: ";
-    public String indexFibonacci = "Fibonacci value at ";
-    public String enterSnakeToCamel = "Enter the String to change from SnakeToCamel case: ";
-    public String convertedCase = "Converted to camelCase: ";
-    public String countConstant = "Enter the String to Count consonants: ";
-    public String enterBinary = "Enter the binary value (0 and 1 only): ";
-    public String invalidBinary = "Invalid Input! Enter numbers containing only 0 and 1.";
-    public String invalidChoice = "Invalid choice! Please enter a number between 1 and 6.";
-
-
-
-
-
-    public static void Option() {
-        System.out.println(" Press 1 for CountPalindromes " +
-                "\n Press 2 for NthFibonacci " +
-                "\n Press 3 for SnakeToCamel " +
-                "\n Press 4 for CountConsonants " +
-                "\n Press 5 for BinaryToDecimal " +
-                "\n Press 6 for Exit");
-        System.out.print("Choose the option from the above (Enter no. between 1-6): ");
-    }
-
+//    set team name
+    public String ENTER_TEAM = "Enter Team name (or type 'exit' to stop adding team): ";
+    public String ENTER_PLAYER = "Enter Player name (or type 'exit' to stop adding team): ";
+    public String TEAM_ADDED = "Team added: ";
+    public String TEAM_EXIST = "Team name already exists!\nEnter new name of team: ";
+    public String VALID_PLAYER = "Player count is less than 11. Please add more players.";
+    public String EXITING_PLAYER = "Exiting player input for team ";
+    public String INVALID_NAME = "Invalid name! Please enter a valid player name (alphanumeric only):";
+    public String PLAYER_EXIST = "Player name already exists in this team!\nEnter new name of player: ";
+    public String CREATE_TEAM = "To create team press any key (or type 'exit' to stop adding teams): ";
+    public String AVAILABLE_TEAM = "Available Teams:";
+    public String ONE_TEAM = "There is only one team, so a match cannot happen.";
+    public String N0_MATCH_POSSIBLE = "Exiting... No match possible with one team.";
+    public String SELECT_TEAM_A = "Select the team for Team A (enter the team number): ";
+    public String EMPTY_INPUT = "Input cannot be empty. Please enter a valid number.";
+    public String INVALID_TEAM_NUMBER = "Invalid team number for Team. Please try again.";
+    public String INVALID_INPUT = "Invalid input. Please enter a valid number.";
+    public String SELECT_TEAM_B = "Select the team for Team B (enter the team number): ";
+    public String TEAM_SELECTED = "Team already selected choose another team.";
+    public String SELECT_11 = "Select 11 players for ";
+    public String SERIAL_NUMBER = "Enter the serial number of player ";
+    public String INVALID_CHOICE = "Invalid choice. Please choose a valid player.";
+    public String PLAYER_SELECTED = "Player already selected! Please choose another player.";
+    public String INVALID_INPUT_NUMBER = "Invalid input. Please enter a number only.";
+    public String CHOOSE_PLAYER_ACTIVE = "Choose striker and nonStriker from the team ";
+    public String CHOOSE_STRIKER = "Choose striker from the team by entering index: ";
+    public String CHOOSE_NON_STRIKER = "Choose nonStriker from the team by entering index: ";
+    public String AS_STRIKER = "Player already selected as Striker! Please choose another player.";
+    public String INVALID_INDEX = "Invalid index. Please choose a valid player.";
+    public String CHOOSE_BOWLER = "Choose the bowler from the team ";
+    public String CHOOSE_BOWLER_TEAM = "Choose bowler from the team by entering index: ";
+    public String BOWLER_NOT_SELECTED = "This bowler cannot bowl consecutive overs. Please choose another.";
+    public String DONE_5_OVER = "This bowler has already bowled 5 overs. Please choose another.";
+    public String LEAST_OVER = "Least number of overs is 2. Choose more than or equal to 2 overs: ";
+    public String INVALID_SELECTION = "Invalid Selection.";
+    public final  String BATTING = "Batting";
+    public String TEAM_TOSS = "Choose the team who won the toss: ";
+    public String INVALID_TEAM = "Invalid team name. Please try again.";
+    public String CHOICE_TEAM = "Enter your choice:\nBatting\nBowling\nChoice: ";
+    public String INVALID_CHOICE_OF_TEAM = "Invalid choice. Please choose Batting or Bowling.";
+    public String CHOOSE_BATSMAN = "Choose new Batsman";
+    public String INDEX_BATSMAN = "Enter index of new batsman: ";
+    public String BATSMAN_SELECTION = "New batsman selected: ";
+    public String CHOOSE_SCORE = "Choose run scored or Wicket\n0 :- Dot ball\n1 :- 1 run\n2 :- 2 runs\n3 :- 3 runs\n4 :- 4 runs\n6 :- 6 runs\n7 :- Hit Wicket\n8 :- Run Out\n9 :- Catch Out: ";
+    public String DOT_BALL = "Dot Ball";
+    public String ONE_RUN = "1 run";
+    public String TWO_RUN = "2 run";
+    public String THREE_RUN = "3 run";
+    public String FOUR_RUN = "4 run";
+    public String SIX_RUN = "6 run";
+    public String HIT_WICKET = "Hit Wicket";
+    public String RUN_OUT = "Run Out";
+    public String CATCH_OUT = "Catch Out";
+    public String WHO_GOT_OUT = "Who got out? Enter 1 for Striker, 2 for Non-Striker: ";
+    public String STRIKER_OUT = "Striker is out.";
+    public String NON_STRIKER_OUT = "Non-Striker is out.";
+    public String INVALID_INPUT_BATSMAN = "Invalid input! Please enter 1 or 2.";
+    public String INVALID = "Invalid input! Please enter a number.";
+    public String OVER_COMPLETE = "Over completed.\n";
+    public String WIDE_BALL_OPTION = "Choose run scored on wide ball\n0 :- No run\n1 :- 1 run\n2 :- 2 runs\n3 :- 3 runs\n4 :- 4 runs: ";
+    public String NO_BALL_OPTION = "Choose run scored or Wicket\n0 :- No run\n1 :- 1 run\n2 :- 2 runs\n3 :- 3 runs\n4 :- 4 runs\n6 :- 6 runs\n7 :- Run Out";
+    public String BYE_OPTION = "Choose run scored on bye\n0 :- No run\n1 :- 1 run\n2 :- 2 runs\n3 :- 3 runs\n4 :- 4 runs: ";
+    public String CHOOSE_BALL_OPTION = "Choose the bowl type\n1 :- Regular Ball\n2 :- Wide Ball\n3 :- No Ball\n4 :- Bye\n5 :- Leg Bye\nChoice: ";
+    public final String BOWLING = "Bowling";
+    public String CHOOSE_CASE = "Choose the option from the list\n1:- Create team\n2:- View Total teams and players\n3:- set over & toss\n4:- Print selected Player from Team \n5:- Start match\n6:- Bowler Stat\n7:- Batsman Stat\n8:- Exit\nChoice: ";
+    public String START_MATCH = "Starting Match...";
+    public String INVALID_OPTION = "Invalid input. Please enter a valid option.";
+    public String BATTING_TEAM = " batting team is:-";
+    public String BOWLING_TEAM = " bowling team is:-";
+    public String BATSMAN = "Batsman: ";
+    public String RUN_SCORED = ", Runs Scored: ";
+    public String WICKET_TAKEN_BY = ", Wicket Taken By: ";
+    public String EXIT = "exit";
+    public String INVALID_TEAM_NAME = "Invalid team Name";
+    public String PLAYER = "Player ";
+    public String TEAM = "Team ";
+    public String PLAYER_OF_TEAM = "Player of Team ";
+    public String STRIKER = "Striker: ";
+    public String NON_STRIKER = "Non-Striker: ";
+    public String SELECTED_BOWLER = "Selected Bowler: ";
+    public String BOWLER = "Bowler: ";
+    public String RUNS_GIVEN = ", Runs Given: ";
+    public String WICKET_TAKEN = ", Wickets Taken: ";
+    public String WON_THE_TOSS = " won the toss and chose ";
+    public String FIRST = " first.\n";
+    public String NOT_OUT = "Not Out";
+    public String SCORED = " Scored ";
+    public String OVER = "Over: ";
+    public String EXTRAS = "Extras: ";
+    public String INNING_COMPLETE = "Inning Complete";
+    public String WINNER_IS = "Winner is ";
+    public String TIE = "It's a Tie! Both teams scored ";
+    public String EXITING = "Exiting....!";
+    public String ERROR_OCCURRED = "An error occurred: ";
 }
