@@ -91,26 +91,26 @@ public class cricketScoreBoard {
     //    set multiple team name
     boolean setNameTeam;
     public void setTeamName(Scanner scan) {
-        System.out.println(constant.enterTeam);
+        System.out.println(constant.ENTER_TEAM);
         setNameTeam = true;
         while (setNameTeam) {
             String nameOfTeam = scan.nextLine();
-            if ("exit".equalsIgnoreCase(nameOfTeam)) {
+            if (constant.EXIT.equalsIgnoreCase(nameOfTeam)) {
                 setNameTeam = false;
                 return;
             } else {
                 if (!isValidName(nameOfTeam)){
-                    System.out.println("Invalid team Name");
-                    System.out.println(constant.enterTeam);
+                    System.out.println(constant.INVALID_TEAM_NAME);
+                    System.out.println(constant.ENTER_TEAM);
                     continue;
                 }
                 if (isUnique(totalTeamName, nameOfTeam, teamCounter)) {
                     totalTeamName[teamCounter] = nameOfTeam;
                     teamCounter++;
-                    System.out.println(constant.teamAdded + nameOfTeam);
+                    System.out.println(constant.TEAM_ADDED + nameOfTeam);
                     break;
                 } else {
-                    System.out.println(constant.teamExist);
+                    System.out.println(constant.TEAM_EXIST);
                 }
             }
         }
@@ -118,23 +118,23 @@ public class cricketScoreBoard {
 
     //    set player name in a team
     public void setPlayerName(Scanner scan, int teamIndex) {
-        System.out.println(constant.enterTeam);
+        System.out.println(constant.ENTER_PLAYER);
         int countPlayerInTeam = 0;
         int playerStartIndex = playerCounter;
         while (true) {
-            System.out.print("Player " + (countPlayerInTeam + 1) + ": ");
+            System.out.print(constant.PLAYER + (countPlayerInTeam + 1) + ": ");
             String nameOfPlayer = scan.nextLine();
-            if ("exit".equalsIgnoreCase(nameOfPlayer)) {
+            if (constant.EXIT.equalsIgnoreCase(nameOfPlayer)) {
                 if (countPlayerInTeam < 11) {
-                    System.out.println(constant.validPlayer);
+                    System.out.println(constant.VALID_PLAYER);
                     continue;
                 }
                 totalPlayerInTeam[teamIndex] = countPlayerInTeam;
-                System.out.println(constant.existingPlayer + totalTeamName[teamIndex]);
+                System.out.println(constant.EXITING_PLAYER + totalTeamName[teamIndex]);
                 break;
             }
             if (!isValidName(nameOfPlayer)) {
-                System.out.println(constant.invalidName);
+                System.out.println(constant.INVALID_NAME);
                 continue;
             }
             if (isUnique(totalPlayerName, nameOfPlayer, playerCounter)) {
@@ -142,7 +142,7 @@ public class cricketScoreBoard {
                 playerCounter++;
                 countPlayerInTeam++;
             } else {
-                System.out.println(constant.playerExist);
+                System.out.println(constant.PLAYER_EXIST);
             }
         }
     }
@@ -150,9 +150,9 @@ public class cricketScoreBoard {
 //    set the multiple team at a time
     public void teamsSet() {
         while (true) {
-            System.out.print(constant.createTeam);
+            System.out.print(constant.CREATE_TEAM);
             String choice = scanner.nextLine();
-            if (!choice.equalsIgnoreCase("exit")) {
+            if (!choice.equalsIgnoreCase(constant.EXIT)) {
                 setTeamName(scanner);
                 if (teamCounter > 0 && setNameTeam) {
                     setPlayerName(scanner, teamCounter - 1);
@@ -167,7 +167,7 @@ public class cricketScoreBoard {
     public void viewTotalTeam() {
         int indexOfPlayer = 0;
         for (int i = 0; i < teamCounter; i++) {
-            System.out.println("Team " + (i + 1) + ": " + totalTeamName[i]);
+            System.out.println(constant.TEAM + (i + 1) + ": " + totalTeamName[i]);
             for (int j = indexOfPlayer; j < indexOfPlayer + totalPlayerInTeam[i]; j++) {
                 System.out.println((j - indexOfPlayer + 1) + " - " + totalPlayerName[j]);
             }
@@ -178,7 +178,7 @@ public class cricketScoreBoard {
 
 //    print name of the team
     public void printTeamNames() {
-        System.out.println(constant.availableTeam);
+        System.out.println(constant.AVAILABLE_TEAM);
         for (int i = 0; i < teamCounter; i++) {
             System.out.println((i + 1) + ": " + totalTeamName[i]);
         }
@@ -190,7 +190,7 @@ public class cricketScoreBoard {
         teamNumber = teamNumber - 1;
         int startIdx = getStartIndexForTeam(teamNumber);
         int endIdx = startIdx + totalPlayerInTeam[teamNumber];
-        System.out.println("Player of Team " + totalTeamName[teamNumber] + ":");
+        System.out.println(constant.PLAYER_OF_TEAM + totalTeamName[teamNumber] + ":");
         for (int i = startIdx; i < endIdx; i++) {
             System.out.println((i - startIdx + 1) + ". " + totalPlayerName[i]);
         }
@@ -208,30 +208,30 @@ public class cricketScoreBoard {
 //    select the playing11 team from team list
     public void selectPlaying11Team() {
         if (teamCounter < 2) {
-            System.out.println(constant.oneTeam);
-            System.out.println(constant.createTeam);
+            System.out.println(constant.ONE_TEAM);
+            System.out.println(constant.CREATE_TEAM);
             String choice = scanner.nextLine();
-            if (!choice.equalsIgnoreCase("exit")) {
+            if (!choice.equalsIgnoreCase(constant.EXIT)) {
                 setTeamName(scanner);
                 setPlayerName(scanner, teamCounter - 1);
             } else {
-                System.out.println(constant.noMatchPossible);
+                System.out.println(constant.N0_MATCH_POSSIBLE);
                 return;
             }
         }
         printTeamNames();
         int teamAIndex = -1;
         while (teamAIndex == -1) {
-            System.out.println(constant.selectTeamA);
+            System.out.println(constant.SELECT_TEAM_A);
             try {
                 String input = scanner.nextLine();
                 if (input.isEmpty()) {
-                    System.out.println(constant.emptyInput);
+                    System.out.println(constant.EMPTY_INPUT);
                     continue;
                 }
                 int teamA = Integer.parseInt(input);
                 if (teamA < 1 || teamA > teamCounter) {
-                    System.out.println(constant.invalidTeamNumber);
+                    System.out.println(constant.INVALID_TEAM_NUMBER);
                 } else {
                     teamAIndex = teamA;
                     teamAName = totalTeamName[teamA - 1];
@@ -239,25 +239,25 @@ public class cricketScoreBoard {
                     choosePlaying11Player(teamA, playing11teamA);
                 }
             } catch (NumberFormatException e) {
-                System.out.println(constant.invalidInput);
+                System.out.println(constant.INVALID_INPUT);
             }
         }
         while (true) {
             printTeamNames();
-            System.out.println(constant.selectTeamB);
+            System.out.println(constant.SELECT_TEAM_B);
             try {
                 String input = scanner.nextLine();
                 if (Integer.parseInt(input) == teamAIndex) {
-                    System.out.println(constant.teamSelected);
+                    System.out.println(constant.TEAM_SELECTED);
                     continue;
                 }
                 if (input.isEmpty()) {
-                    System.out.println(constant.emptyInput);
+                    System.out.println(constant.EMPTY_INPUT);
                     continue;
                 }
                 int teamB = Integer.parseInt(input);
                 if (teamB < 1 || teamB > teamCounter) {
-                    System.out.println(constant.invalidTeamNumber);
+                    System.out.println(constant.INVALID_TEAM_NUMBER);
                     continue;
                 }
                 teamBName = totalTeamName[teamB - 1];
@@ -265,7 +265,7 @@ public class cricketScoreBoard {
                 choosePlaying11Player(teamB, playing11teamB);
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(constant.invalidInput);
+                System.out.println(constant.INVALID_INPUT);
             }
         }
     }
@@ -277,26 +277,26 @@ public class cricketScoreBoard {
         for (int i = 0; i < teamIndex; i++) {
             indexOfPlayer += totalPlayerInTeam[i];
         }
-        System.out.println(constant.select11 + totalTeamName[teamIndex]);
+        System.out.println(constant.SELECT_11 + totalTeamName[teamIndex]);
         int selectedPlayers = 0;
         boolean[] isPlayerSelected = new boolean[totalPlayerInTeam[teamIndex]];
         while (selectedPlayers < 11) {
             boolean validInput = false;
             int playerChoice = -1;
             while (!validInput) {
-                System.out.print(constant.serialNumber + (selectedPlayers + 1) + ": ");
+                System.out.print(constant.SERIAL_NUMBER + (selectedPlayers + 1) + ": ");
                 String input = scanner.nextLine();
                 try {
                     playerChoice = Integer.parseInt(input);
                     if (playerChoice < 1 || playerChoice > totalPlayerInTeam[teamIndex]) {
-                        System.out.println(constant.invalidChoice);
+                        System.out.println(constant.INVALID_CHOICE);
                     } else if (isPlayerSelected[playerChoice - 1]) {
-                        System.out.println(constant.playerSelected);
+                        System.out.println(constant.PLAYER_SELECTED);
                     } else {
                         validInput = true;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println(constant.invalidInputNumber);
+                    System.out.println(constant.INVALID_INPUT_NUMBER);
                 }
             }
             int playerIndex = indexOfPlayer + playerChoice - 1;
@@ -308,50 +308,50 @@ public class cricketScoreBoard {
 
 //    batting of the team
     public void Batting(String[] nameOfTeam) {
-        System.out.println(constant.choosePlayerActive);
+        System.out.println(constant.CHOOSE_PLAYER_ACTIVE);
         for (int i = 0; i < nameOfTeam.length; i++) {
             System.out.println((i + 1) + " - " + nameOfTeam[i]);
         }
         int chooseStriker;
         String striker;
         while (true) {
-            System.out.print(constant.chooseStriker);
+            System.out.print(constant.CHOOSE_STRIKER);
             try {
                 chooseStriker = scanner.nextInt();
                 scanner.nextLine();
                 if (chooseStriker < 1 || chooseStriker > nameOfTeam.length) {
-                    System.out.println(constant.invalidChoice);
+                    System.out.println(constant.INVALID_CHOICE);
                 } else {
                     striker = nameOfTeam[chooseStriker - 1];
                     strikerName = striker;
                     break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println(constant.invalidInput);
+                System.out.println(constant.INVALID_INPUT);
                 scanner.next();
             }
         }
         String nonStriker;
         while (true) {
-            System.out.print(constant.nonStriker);
+            System.out.print(constant.CHOOSE_NON_STRIKER);
             try {
                 int chooseNonStriker = scanner.nextInt();
                 scanner.nextLine();
                 if (chooseNonStriker == chooseStriker) {
-                    System.out.println(constant.asStriker);
+                    System.out.println(constant.AS_STRIKER);
                 } else if (chooseNonStriker < 1 || chooseNonStriker > nameOfTeam.length) {
-                    System.out.println(constant.invalidIndex);
+                    System.out.println(constant.INVALID_INDEX);
                 } else {
                     nonStriker = nameOfTeam[chooseNonStriker - 1];
                     nonStrikerName = nonStriker;
                     break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println(constant.invalidInput);
+                System.out.println(constant.INVALID_INPUT);
                 scanner.next();
             }
         }
-        System.out.println("\nStriker: " + strikerName + "\nNon-Striker: " + nonStrikerName + "\n");
+        System.out.println("\n"+constant.STRIKER + strikerName + "\n"+constant.NON_STRIKER + nonStrikerName + "\n");
     }
 
 //    bowling by the team
@@ -359,7 +359,7 @@ public class cricketScoreBoard {
     private int countOver = 0;
     int[] overByBowler = new int[11];
     public void Bowling(String[] bowlingTeam) {
-        System.out.println(constant.chooseBowler);
+        System.out.println(constant.CHOOSE_BOWLER);
         for (int i = 0; i < bowlingTeam.length; i++) {
             if (!bowlingTeam[i].equals(lastBowler) && overByBowler[i] < 5) {
                 System.out.println((i + 1) + " - " + bowlingTeam[i]);
@@ -368,18 +368,18 @@ public class cricketScoreBoard {
         int chooseBowler;
         String bowler;
         while (true) {
-            System.out.print(constant.chooseBowlerTeam);
+            System.out.print(constant.CHOOSE_BOWLER_TEAM);
             try {
                 chooseBowler = scanner.nextInt();
                 if (chooseBowler < 1 || chooseBowler > bowlingTeam.length) {
-                    System.out.println(constant.invalidIndex);
+                    System.out.println(constant.INVALID_INDEX);
                 } else {
                     int index = chooseBowler - 1;
                     bowler = bowlingTeam[index];
                     if (bowler.equals(lastBowler)) {
-                        System.out.println(constant.bowlerNotSelected);
+                        System.out.println(constant.BOWLER_NOT_SELECTED);
                     } else if (overByBowler[index] >= 5) {
-                        System.out.println(constant.done5Over);
+                        System.out.println(constant.DONE_5_OVER);
                     } else {
                         bowlerName = bowler;
                         lastBowler = bowler;
@@ -388,11 +388,11 @@ public class cricketScoreBoard {
                     }
                 }
             } catch (InputMismatchException e) {
-                System.out.println(constant.invalidInput);
+                System.out.println(constant.INVALID_INPUT);
                 scanner.next();
             }
         }
-        System.out.println("Selected Bowler: " + bowlerName + "\n\n");
+        System.out.println(constant.SELECTED_BOWLER + bowlerName + "\n\n");
     }
 
 //   bowler stats
@@ -424,7 +424,7 @@ public class cricketScoreBoard {
 //    print the bowler stat
     public void printBowlerStats() {
         for (int i = 0; i < uniqueBowler; i++) {
-            System.out.println("Bowler: " + bowlers[i] + ", Runs Given: " + runsGivenBowler[i] + ", Wickets Taken: " + wicketsByBowler[i]);
+            System.out.println(constant.BOWLER + bowlers[i] + constant.RUNS_GIVEN + runsGivenBowler[i] + constant.WICKET_TAKEN + wicketsByBowler[i]);
         }
     }
 
@@ -432,18 +432,18 @@ public class cricketScoreBoard {
     public void setOver() {
         int over;
         while (true) {
-            System.out.print(constant.leastOver);
+            System.out.print(constant.LEAST_OVER);
             try {
                 over = scanner.nextInt();
                 scanner.nextLine();
                 if (over < 2) {
-                    System.out.println(constant.invalidSelection);
+                    System.out.println(constant.INVALID_SELECTION);
                 } else {
                     Over = over;
                     break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println(constant.invalidInput);
+                System.out.println(constant.INVALID_INPUT);
                 scanner.next();
             }
         }
@@ -452,13 +452,13 @@ public class cricketScoreBoard {
 //    give the toss result of the team
     public void tossResult(String teamName, String teamChoice) {
         if (teamName.equals(teamAName)) {
-            if (teamChoice.equalsIgnoreCase(constant.batting)) {
+            if (teamChoice.equalsIgnoreCase(constant.BATTING)) {
                 Bowling(playing11teamB);
             } else {
                 Bowling(playing11teamA);
             }
         } else {
-            if (teamChoice.equalsIgnoreCase(constant.batting)) {
+            if (teamChoice.equalsIgnoreCase(constant.BATTING)) {
                 Bowling(playing11teamA);
             } else {
                 Bowling(playing11teamB);
@@ -469,25 +469,25 @@ public class cricketScoreBoard {
 //  toss between the teams
     public void toss() {
         while (true) {
-            System.out.print(constant.teamToss);
+            System.out.print(constant.TEAM_TOSS);
             System.out.println(teamAName + "\t" + teamBName);
             String tossWin = scanner.next().trim();
             if (!tossWin.equalsIgnoreCase(teamAName) && !tossWin.equalsIgnoreCase(teamBName)) {
-                System.out.println(constant.invalidTeam);
+                System.out.println(constant.INVALID_TEAM);
                 continue;
             }
             tossWinner = tossWin.equalsIgnoreCase(teamAName) ? teamAName : teamBName;
             tossLooser = tossWinner.equalsIgnoreCase(teamAName) ? teamBName : teamAName;
             while (true) {
-                System.out.print(constant.choiceTeam);
+                System.out.print(constant.CHOICE_TEAM);
                 String choice = scanner.next().trim().toLowerCase();
 
-                if (!choice.equalsIgnoreCase(constant.batting) && !choice.equalsIgnoreCase("bowling")) {
-                    System.out.println(constant.invalidChoiceOfTeam);
+                if (!choice.equalsIgnoreCase(constant.BATTING) && !choice.equalsIgnoreCase(constant.BOWLING)) {
+                    System.out.println(constant.INVALID_CHOICE_OF_TEAM);
                     continue;
                 }
-                teamChoice = choice.equalsIgnoreCase("batting") ? "batting" : "bowling";
-                System.out.println("\nTeam " + tossWinner + " won the toss and chose " + teamChoice + " first.\n");
+                teamChoice = choice.equalsIgnoreCase(constant.BATTING) ? constant.BATTING : constant.BOWLING;
+                System.out.println("\n"+constant.TEAM + tossWinner + constant.WON_THE_TOSS + teamChoice + constant.FIRST);
                 break;
             }
             break;
@@ -526,7 +526,7 @@ public class cricketScoreBoard {
     static private int strikerScore;
     static private int nonStrikerScore;
     public void wicket(String outPlayer, int outPlayerScore, String[] playingTeam) {
-        System.out.println(constant.chooseBatsman);
+        System.out.println(constant.CHOOSE_BATSMAN);
         int remainingPlayerIndex = 0;
         outBatsman[outPlayerIndex] = outPlayer;
         outBatsmanRun[outPlayerIndex] = outPlayerScore;
@@ -556,14 +556,14 @@ public class cricketScoreBoard {
         }
         int chooseNewBatsman;
         while (true) {
-            System.out.print(constant.indexBatsman);
+            System.out.print(constant.INDEX_BATSMAN);
             try {
                 chooseNewBatsman = Integer.parseInt(scanner.nextLine());
                 if (chooseNewBatsman < 1 || chooseNewBatsman > remainingPlayerIndex) {
-                    System.out.println(constant.invalidChoice);
+                    System.out.println(constant.INVALID_CHOICE);
                 } else {
                     String newBatsman = batsmanRemains[chooseNewBatsman - 1];
-                    System.out.println(constant.batsmanSelection + newBatsman);
+                    System.out.println(constant.BATSMAN_SELECTION + newBatsman);
                     if (outPlayer.equals(strikerName)) {
                         strikerName = newBatsman;
                         strikerScore = 0;
@@ -574,7 +574,7 @@ public class cricketScoreBoard {
                     break;
                 }
             } catch (NumberFormatException e) {
-                System.out.println(constant.invalidInput);
+                System.out.println(constant.INVALID_INPUT);
             }
         }
     }
@@ -582,7 +582,7 @@ public class cricketScoreBoard {
     //  print the batting stats
     public void printBattingStats() {
         for (int i = 0; i < outPlayerIndex; i++) {
-            System.out.println("Batsman: " + outBatsman[i] + ", Runs Scored: " + outBatsmanRun[i] + ", Wicket Taken By: " + bowlerTakenWicket[i]);
+            System.out.println(constant.BATSMAN + outBatsman[i] + constant.RUN_SCORED + outBatsmanRun[i] + constant.WICKET_TAKEN_BY + bowlerTakenWicket[i]);
         }
     }
 
@@ -599,15 +599,15 @@ public class cricketScoreBoard {
     public void regularBall() {
         while (true) {
             try {
-                System.out.print(constant.chooseScore);
+                System.out.print(constant.CHOOSE_SCORE);
                 int choose = Integer.parseInt(scanner.nextLine());
                 switch (choose) {
                     case 0:
-                        System.out.println(constant.dotBall);
+                        System.out.println(constant.DOT_BALL);
                         balls += 1;
                         break;
                     case 1:
-                        System.out.println(constant.oneRun);
+                        System.out.println(constant.ONE_RUN);
                         totalScore += 1;
                         strikerScore += 1;
                         bowlerRun += 1;
@@ -615,14 +615,14 @@ public class cricketScoreBoard {
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 2:
-                        System.out.println(constant.twoRun);
+                        System.out.println(constant.TWO_RUN);
                         totalScore += 2;
                         strikerScore += 2;
                         bowlerRun += 2;
                         balls += 1;
                         break;
                     case 3:
-                        System.out.println(constant.threeRun);
+                        System.out.println(constant.THREE_RUN);
                         totalScore += 3;
                         strikerScore += 3;
                         bowlerRun += 3;
@@ -630,21 +630,21 @@ public class cricketScoreBoard {
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 4:
-                        System.out.println(constant.fourRun);
+                        System.out.println(constant.FOUR_RUN);
                         totalScore += 4;
                         strikerScore += 4;
                         bowlerRun += 4;
                         balls += 1;
                         break;
                     case 6:
-                        System.out.println(constant.sixRun);
+                        System.out.println(constant.SIX_RUN);
                         totalScore += 6;
                         strikerScore += 6;
                         bowlerRun += 6;
                         balls += 1;
                         break;
                     case 7:
-                        System.out.println(constant.hitWicket);
+                        System.out.println(constant.HIT_WICKET);
                         totalWicket += 1;
                         bowlerWicket += 1;
                         balls += 1;
@@ -655,31 +655,31 @@ public class cricketScoreBoard {
                         }
                         break;
                     case 8:
-                        System.out.println(constant.runOut);
+                        System.out.println(constant.RUN_OUT);
                         totalWicket += 1;
                         balls += 1;
-                        System.out.print(constant.whoGotOut);
+                        System.out.print(constant.WHO_GOT_OUT);
                         int whoGotOut = Integer.parseInt(scanner.nextLine());
                         if (whoGotOut == 1) {
-                            System.out.println(constant.strikerOut);
+                            System.out.println(constant.STRIKER_OUT);
                             if (totalWicket <= 9) {
                                 wicket(strikerName, strikerScore, currentPlaying);
                             } else {
                                 break;
                             }
                         } else if (whoGotOut == 2) {
-                            System.out.println(constant.nonStrikerOut);
+                            System.out.println(constant.NON_STRIKER_OUT);
                             if (totalWicket <= 9) {
                                 wicket(nonStrikerName, nonStrikerScore, currentPlaying);
                             } else {
                                 break;
                             }
                         } else {
-                            System.out.println(constant.invalidInputBatsman);
+                            System.out.println(constant.INVALID_INPUT_BATSMAN);
                         }
                         break;
                     case 9:
-                        System.out.println(constant.catchOut);
+                        System.out.println(constant.CATCH_OUT);
                         totalWicket += 1;
                         bowlerWicket += 1;
                         balls += 1;
@@ -690,12 +690,12 @@ public class cricketScoreBoard {
                         }
                         break;
                     default:
-                        System.out.println(constant.invalid);
+                        System.out.println(constant.INVALID);
                         continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(constant.invalidName);
+                System.out.println(constant.INVALID_NAME);
             }
         }
         totalDelivery += 1;
@@ -707,7 +707,7 @@ public class cricketScoreBoard {
             bowlerRun = 0;
             bowlerWicket = 0;
             totalDelivery = 0;
-            System.out.println(constant.overComplete);
+            System.out.println(constant.OVER_COMPLETE);
             if (countOver < Over) {
                 tossResult(tossWinner, teamChoice);
             }
@@ -717,43 +717,43 @@ public class cricketScoreBoard {
     public void wide() {
         while (true) {
             try {
-                System.out.print(constant.wideBallOption);
+                System.out.print(constant.WIDE_BALL_OPTION);
                 int choose = Integer.parseInt(scanner.nextLine());
                 totalScore += 1;
                 extras += 1;
                 switch (choose) {
                     case 0:
-                        System.out.println(constant.dotBall);
+                        System.out.println(constant.DOT_BALL);
                         break;
                     case 1:
-                        System.out.println(constant.oneRun);
+                        System.out.println(constant.ONE_RUN);
                         totalScore += 1;
                         extras += 1;
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 2:
-                        System.out.println(constant.twoRun);
+                        System.out.println(constant.TWO_RUN);
                         totalScore += 2;
                         extras += 2;
                         break;
                     case 3:
-                        System.out.println(constant.threeRun);
+                        System.out.println(constant.THREE_RUN);
                         totalScore += 3;
                         extras += 3;
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 4:
-                        System.out.println(constant.fourRun);
+                        System.out.println(constant.FOUR_RUN);
                         totalScore += 4;
                         extras += 4;
                         break;
                     default:
-                        System.out.println(constant.invalidInput);
+                        System.out.println(constant.INVALID_INPUT);
                         continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(constant.invalid);
+                System.out.println(constant.INVALID);
             }
         }
         totalDelivery += 1;
@@ -762,73 +762,73 @@ public class cricketScoreBoard {
     public void noBall() {
         while (true) {
             try {
-                System.out.println(constant.noBallOption);
+                System.out.println(constant.NO_BALL_OPTION);
                 int choose = Integer.parseInt(scanner.nextLine());
                 totalScore += 1;
                 extras += 1;
                 switch (choose) {
                     case 0:
-                        System.out.println(constant.dotBall);
+                        System.out.println(constant.DOT_BALL);
                         break;
                     case 1:
-                        System.out.println(constant.oneRun);
+                        System.out.println(constant.ONE_RUN);
                         totalScore += 1;
                         extras += 1;
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 2:
-                        System.out.println(constant.twoRun);
+                        System.out.println(constant.TWO_RUN);
                         totalScore += 2;
                         extras += 2;
                         break;
                     case 3:
-                        System.out.println(constant.threeRun);
+                        System.out.println(constant.THREE_RUN);
                         totalScore += 3;
                         extras += 3;
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 4:
-                        System.out.println(constant.fourRun);
+                        System.out.println(constant.FOUR_RUN);
                         totalScore += 4;
                         extras += 4;
                         break;
                     case 6:
-                        System.out.println(constant.sixRun);
+                        System.out.println(constant.SIX_RUN);
                         totalScore += 6;
                         extras += 6;
                         break;
                     case 7:
-                        System.out.println(constant.runOut);
+                        System.out.println(constant.RUN_OUT);
                         totalWicket += 1;
                         while (true) {
-                            System.out.print(constant.whoGotOut);
+                            System.out.print(constant.WHO_GOT_OUT);
                             int whoGotOut = Integer.parseInt(scanner.nextLine());
                             if (whoGotOut == 1) {
-                                System.out.println(constant.strikerOut);
+                                System.out.println(constant.STRIKER_OUT);
                                 if (totalWicket <= 9) {
                                     wicket(strikerName, strikerScore, currentPlaying);
                                 } else {
                                     break;
                                 }
                             } else if (whoGotOut == 2) {
-                                System.out.println(constant.nonStrikerOut);
+                                System.out.println(constant.NON_STRIKER_OUT);
                                 if (totalWicket <= 9) {
                                     wicket(nonStrikerName, nonStrikerScore, currentPlaying);
                                 } else {
                                     break;
                                 }
                             } else {
-                                System.out.println(constant.invalidInputBatsman);
+                                System.out.println(constant.INVALID_INPUT_BATSMAN);
                             }
                         }
                         break;
                     default:
-                        System.out.println(constant.invalidInput);
+                        System.out.println(constant.INVALID_INPUT);
                         continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(constant.invalid);
+                System.out.println(constant.INVALID);
             }
         }
         totalDelivery += 1;
@@ -837,41 +837,41 @@ public class cricketScoreBoard {
     public void bye() {
         while (true) {
             try {
-                System.out.print(constant.byeOption);
+                System.out.print(constant.BYE_OPTION);
                 int byeRun = Integer.parseInt(scanner.nextLine());
                 switch (byeRun) {
                     case 0:
-                        System.out.println(constant.dotBall);
+                        System.out.println(constant.DOT_BALL);
                         break;
                     case 1:
-                        System.out.println(constant.oneRun);
+                        System.out.println(constant.ONE_RUN);
                         totalScore += 1;
                         extras += 1;
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 2:
-                        System.out.println(constant.twoRun);
+                        System.out.println(constant.TWO_RUN);
                         totalScore += 2;
                         extras += 2;
                         break;
                     case 3:
-                        System.out.println(constant.threeRun);
+                        System.out.println(constant.THREE_RUN);
                         totalScore += 3;
                         extras += 3;
                         swapPlayer(strikerName, nonStrikerName);
                         break;
                     case 4:
-                        System.out.println(constant.fourRun);
+                        System.out.println(constant.FOUR_RUN);
                         totalScore += 4;
                         extras += 4;
                         break;
                     default:
-                        System.out.println(constant.invalidInput);
+                        System.out.println(constant.INVALID_INPUT);
                         continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(constant.invalid);
+                System.out.println(constant.INVALID);
             }
         }
         totalDelivery += 1;
@@ -881,7 +881,7 @@ public class cricketScoreBoard {
     public void countRuns(String player) {
         while (true) {
             try {
-                System.out.print(constant.chooseBallOption);
+                System.out.print(constant.CHOOSE_BALL_OPTION);
                 int ballType = scanner.nextInt();
                 scanner.nextLine();
 
@@ -900,12 +900,12 @@ public class cricketScoreBoard {
                         bye();
                         break;
                     default:
-                        System.out.println(constant.invalidInput);
+                        System.out.println(constant.INVALID_INPUT);
                         continue;
                 }
                 break;
             } catch (Exception e) {
-                System.out.println(constant.invalid);
+                System.out.println(constant.INVALID);
                 scanner.nextLine();
             }
         }
@@ -914,16 +914,16 @@ public class cricketScoreBoard {
 //    gives the next batting team
     boolean played;
     public void nextBatting(boolean toss) {
-        if (tossWinner.equalsIgnoreCase(teamAName) && teamChoice.equalsIgnoreCase(constant.batting) && toss) {
+        if (tossWinner.equalsIgnoreCase(teamAName) && teamChoice.equalsIgnoreCase(constant.BATTING) && toss) {
             played = false;
         }
-        if (tossWinner.equalsIgnoreCase(teamAName) && teamChoice.equalsIgnoreCase(constant.bowling) && !toss) {
+        if (tossWinner.equalsIgnoreCase(teamAName) && teamChoice.equalsIgnoreCase(constant.BOWLING) && !toss) {
             played = true;
         }
-        if (tossWinner.equalsIgnoreCase(teamBName) && teamChoice.equalsIgnoreCase(constant.batting) && toss) {
+        if (tossWinner.equalsIgnoreCase(teamBName) && teamChoice.equalsIgnoreCase(constant.BATTING) && toss) {
             played = true;
         }
-        if (tossWinner.equalsIgnoreCase(teamBName) && teamChoice.equalsIgnoreCase(constant.bowling) && !toss) {
+        if (tossWinner.equalsIgnoreCase(teamBName) && teamChoice.equalsIgnoreCase(constant.BOWLING) && !toss) {
             played = false;
         }
     }
@@ -955,32 +955,56 @@ public class cricketScoreBoard {
             }
             switch (teamChoice.toLowerCase()) {
                 case "batting":
-                    System.out.println(teamAName + " batting team is:-");
-                    printTeamMembers(indexA);
-                    System.out.println(teamBName + " bowling team is:-");
-                    printTeamMembers(indexB);
+                    System.out.println(teamAName + constant.BATTING_TEAM);
+                    for (int i = 0;i < playing11teamA.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamA[i]);
+                    }
+                    System.out.println(teamBName + constant.BOWLING_TEAM);
+                    for (int i = 0;i < playing11teamB.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamB[i]);
+                    }
                     break;
                 case "bowling":
-                    System.out.println(teamBName + " batting team is:-");
-                    printTeamMembers(indexB);
-                    System.out.println(teamAName + " bowling team is:-");
-                    printTeamMembers(indexA);
+                    System.out.println(teamBName + constant.BATTING_TEAM);
+                    for (int i = 0;i <playing11teamB.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamB[i]);
+                    }
+                    System.out.println(teamAName + constant.BOWLING_TEAM);
+                    for (int i = 0;i <playing11teamA.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamA[i]);
+                    }
                     break;
             }
         } else {
             switch (teamChoice.toLowerCase()) {
                 case "batting":
-                    System.out.println(teamBName + " batting team is:-");
-                    printTeamMembers(indexB);
-                    System.out.println(teamAName + " bowling team is:-");
-                    printTeamMembers(indexA);
+                    System.out.println(teamBName + constant.BATTING_TEAM);
+                    for (int i = 0;i <playing11teamB.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamB[i]);
+                    }
+                    System.out.println(teamAName + constant.BOWLING_TEAM);
+                    for (int i = 0;i <playing11teamA.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamA[i]);
+                    }
                     break;
 
                 case "bowling":
-                    System.out.println(teamAName + " batting team is:-");
-                    printTeamMembers(indexA);
-                    System.out.println(teamBName + " bowling team is:-");
-                    printTeamMembers(indexB);
+                    System.out.println(teamAName + constant.BATTING_TEAM);
+                    for (int i = 0;i <playing11teamA.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamA[i]);
+                    }
+                    System.out.println(teamBName + constant.BOWLING_TEAM);
+                    for (int i = 0;i <playing11teamB.length;i++)
+                    {
+                        System.out.println((i+1)+". "+playing11teamB[i]);
+                    }
                     break;
             }
         }
@@ -988,16 +1012,18 @@ public class cricketScoreBoard {
 
 //  start the match between teams
     public void startMatch(){
-        System.out.println(constant.startMatch);
+        System.out.println(constant.START_MATCH);
         boolean toss;
         if (tossWinner.equals(teamAName)) {
-            if (teamChoice.equalsIgnoreCase(constant.batting)) {
+            if (teamChoice.equalsIgnoreCase(constant.BATTING)) {
+                System.out.println(constant.TEAM+ tossWinner);
                 swapTeam(currentPlaying, playing11teamA);
                 Batting(currentPlaying);
                 Bowling(playing11teamB);
                 teamPlayedTimes += 1;
                 toss = true;
             } else {
+                System.out.println(constant.TEAM+ tossWinner);
                 swapTeam(currentPlaying, playing11teamB);
                 Batting(currentPlaying);
                 Bowling(playing11teamA);
@@ -1005,13 +1031,15 @@ public class cricketScoreBoard {
                 teamPlayedTimes += 1;
             }
         } else {
-            if (teamChoice.equalsIgnoreCase(constant.batting)) {
+            if (teamChoice.equalsIgnoreCase(constant.BATTING)) {
+                System.out.println(constant.TEAM+ tossLooser);
                 swapTeam(currentPlaying, playing11teamB);
                 Batting(currentPlaying);
                 Bowling(playing11teamA);
                 teamPlayedTimes += 1;
                 toss = true;
             } else {
+                System.out.println(constant.TEAM+ tossLooser);
                 swapTeam(currentPlaying, playing11teamA);
                 Batting(currentPlaying);
                 Bowling(playing11teamB);
@@ -1026,26 +1054,43 @@ public class cricketScoreBoard {
         while (Inning < 2) {
             if (toss) {
                 if (runsLeftTeamB > totalScoreTeamB && Inning == 1) {
+                    outBatsman[outPlayerIndex] = strikerName;
+                    outBatsmanRun[outPlayerIndex] = strikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
+                    outBatsman[outPlayerIndex] = nonStrikerName;
+                    outBatsmanRun[outPlayerIndex] = nonStrikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
+
                     bowlerStat(bowlerName, bowlerRun, bowlerWicket);
                     totalScoreTeamA = totalScore;
-                    System.out.println(tossWinner + " Scored " + totalScoreTeamA + "/" + totalWicket);
+                    System.out.println(tossWinner + constant.SCORED + totalScoreTeamA + "/" + totalWicket);
                     break;
                 }
-                System.out.println("Striker:  " + strikerName + "\t\t|\t\t" + "nonStriker:  " + nonStrikerName + "\n" +
-                        "Bowler:  " + bowlerName + "\t\t\t" + "Over: " + countOver + "." + balls + "/" + Over + "\t\t\t" +
-                        "Extras: " + extras + "\n" + tossWinner + "  " + totalScore + "/" + totalWicket + "\t\t\t" +
+                System.out.println(constant.STRIKER + strikerName + "\t\t|\t\t" + constant.NON_STRIKER + nonStrikerName + "\n" +
+                        constant.BOWLER + bowlerName + "\t\t\t" + constant.OVER + countOver + "." + balls + "/" + Over + "\t\t\t" +
+                        constant.EXTRAS + extras + "\n" + tossWinner + "  " + totalScore + "/" + totalWicket + "\t\t\t" +
                         strikerName + "  " + strikerScore + "\t\t\t" + nonStrikerName + "  " + nonStrikerScore + "\n");
                 if (countOver < Over && totalWicket < 10) {
                     countRuns(strikerName);
                     if (Inning ==1 && runsLeftTeamB <= totalScoreTeamB) {
-                        System.out.println("Team " + tossWinner + " require " + (totalScoreTeamB - totalScore + 1) + " to win");
+                        System.out.println(constant.TEAM + tossWinner + " require " + (totalScoreTeamB - totalScore + 1) + " to win");
                         runsLeftTeamB = totalScore;
                     }
                 }
                 if (countOver == Over || totalWicket == 10) {
                     totalScoreTeamA = totalScore;
-                    System.out.println(tossWinner + " Scored " + totalScoreTeamA + "/" + totalWicket);
-                    System.out.println("\nInning Complete" + "\n\n");
+                    System.out.println(tossWinner + constant.SCORED + totalScoreTeamA + "/" + totalWicket);
+                    outBatsman[outPlayerIndex] = strikerName;
+                    outBatsmanRun[outPlayerIndex] = strikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
+                    outBatsman[outPlayerIndex] = nonStrikerName;
+                    outBatsmanRun[outPlayerIndex] = nonStrikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
+                    System.out.println("\n"+constant.INNING_COMPLETE + "\n\n");
                     if (teamPlayedTimes == 2) {
                         break;
                     } else {
@@ -1056,13 +1101,13 @@ public class cricketScoreBoard {
                             Batting(currentPlaying);
                             Bowling(playing11teamB);
                             teamPlayedTimes += 1;
-                            teamChoice = "bowling";
+                            teamChoice = constant.BOWLING;
                         } else {
                             swapTeam(currentPlaying, playing11teamB);
                             Batting(currentPlaying);
                             Bowling(playing11teamA);
                             teamPlayedTimes += 1;
-                            teamChoice = "bowling";
+                            teamChoice = constant.BOWLING;
                         }
                         Inning += 1;
                         resetInningVariable();
@@ -1070,28 +1115,43 @@ public class cricketScoreBoard {
                 }
             } else {
                 if (runsLeftTeamA > totalScoreTeamA & Inning == 1) {
+                    outBatsman[outPlayerIndex] = strikerName;
+                    outBatsmanRun[outPlayerIndex] = strikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
+                    outBatsman[outPlayerIndex] = nonStrikerName;
+                    outBatsmanRun[outPlayerIndex] = nonStrikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
                     bowlerStat(bowlerName, bowlerRun, bowlerWicket);
                     totalScoreTeamB = totalScore;
-                    System.out.println(tossLooser + " Scored " + totalScoreTeamB + "/" + totalWicket);
+                    System.out.println(tossLooser + constant.SCORED + totalScoreTeamB + "/" + totalWicket);
                     break;
                 }
-                System.out.println("Striker:  " + strikerName + "\t\t|\t\t" + "nonStriker:  " + nonStrikerName + "\n" +
-                        "Bowler:  " + bowlerName + "\t\t\t" + "Over: " + countOver + "." + balls + "/" + Over + "\t\t\t" +
-                        "Extras: " + extras + "\n" + tossLooser + "  " + totalScore + "/" + totalWicket + "\t\t\t" +
+                System.out.println(constant.STRIKER + strikerName + "\t\t|\t\t" + constant.NON_STRIKER + nonStrikerName + "\n" +
+                        constant.BOWLER + bowlerName + "\t\t\t" + constant.OVER + countOver + "." + balls + "/" + Over + "\t\t\t" +
+                        constant.EXTRAS + extras + "\n" + tossLooser + "  " + totalScore + "/" + totalWicket + "\t\t\t" +
                         strikerName + "  " + strikerScore + "\t\t\t" + nonStrikerName + "  " + nonStrikerScore+"\n");
                 if (countOver < Over && totalWicket < 10) {
                     countRuns(strikerName);
                     if(Inning == 1 && runsLeftTeamA <= totalScoreTeamA) {
-                        System.out.println("Team " + tossLooser + " require " + (totalScoreTeamA - totalScore + 1) + " to win" );
+                        System.out.println(constant.TEAM + tossLooser + " require " + (totalScoreTeamA - totalScore + 1) + " to win" );
                         runsLeftTeamA = totalScore;
                     }
                 }
                 if (countOver == Over || totalWicket == 10) {
                     totalScoreTeamB = totalScore;
-                    System.out.println(tossLooser + " Scored " + totalScoreTeamB + "/" + totalWicket);
+                    System.out.println(tossLooser + constant.SCORED + totalScoreTeamB + "/" + totalWicket);
                     runsLeftTeamB = totalScoreTeamB;
-                    System.out.println("Inning Complete" + "\n\n\n\n");
-
+                    outBatsman[outPlayerIndex] = strikerName;
+                    outBatsmanRun[outPlayerIndex] = strikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
+                    outBatsman[outPlayerIndex] = nonStrikerName;
+                    outBatsmanRun[outPlayerIndex] = nonStrikerScore;
+                    bowlerTakenWicket[outPlayerIndex] = constant.NOT_OUT;
+                    outPlayerIndex++;
+                    System.out.println(constant.INNING_COMPLETE + "\n\n\n\n");
                     if (teamPlayedTimes == 2) {
                         break;
                     } else {
@@ -1102,13 +1162,13 @@ public class cricketScoreBoard {
                             Batting(currentPlaying);
                             Bowling(playing11teamB);
                             teamPlayedTimes += 1;
-                            teamChoice = "batting";
+                            teamChoice = constant.BATTING;
                         } else {
                             swapTeam(currentPlaying, playing11teamB);
                             Batting(currentPlaying);
                             Bowling(playing11teamA);
                             teamPlayedTimes += 1;
-                            teamChoice = "batting";
+                            teamChoice = constant.BATTING;
                         }
                         Inning += 1;
                         resetInningVariable();
@@ -1117,11 +1177,11 @@ public class cricketScoreBoard {
             }
         }
         if (totalScoreTeamA > totalScoreTeamB) {
-            System.out.println("Winner is " + teamAName + " by " + (totalScoreTeamA - totalScoreTeamB) + " runs.\n");
+            System.out.println(constant.WINNER_IS + teamAName + " by " + (totalScoreTeamA - totalScoreTeamB) + " runs.\n");
         } else if (totalScoreTeamA < totalScoreTeamB) {
-            System.out.println("Winner is " + teamBName + " by " + (totalScoreTeamB - totalScoreTeamA) + " runs.\n");
+            System.out.println(constant.WINNER_IS + teamBName + " by " + (totalScoreTeamB - totalScoreTeamA) + " runs.\n");
         } else {
-            System.out.println("It's a Tie! Both teams scored " + totalScoreTeamA + " runs.\n");
+            System.out.println(constant.TIE + totalScoreTeamA + " runs.\n");
         }
     }
 
@@ -1131,7 +1191,7 @@ public class cricketScoreBoard {
         cricketScoreBoard cricket = new cricketScoreBoard();
         boolean isValid = true;
         while (isValid) {
-            System.out.print(constant.chooseCase);
+            System.out.print(constant.CHOOSE_CASE);
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -1161,14 +1221,14 @@ public class cricketScoreBoard {
                         cricket.printBattingStats();
                         break;
                     case 8:
-                        System.out.println("Exiting....!");
+                        System.out.println(constant.EXITING);
                         isValid = false;
                         break;
                     default:
-                        System.out.println(constant.invalidOption);
+                        System.out.println(constant.INVALID_OPTION);
                 }
             } catch (Exception e) {
-                System.out.println("An error occurred: " + e.getMessage());
+                System.out.println(constant.ERROR_OCCURRED + e.getMessage());
                 scanner.nextLine();
             }
         }
